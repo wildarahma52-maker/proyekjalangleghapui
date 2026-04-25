@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titik Proyek - RoadFix Pidie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0f111a; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .sidebar { background-color: #161b22; }
+        .card { background-color: #1c2128; border: 1px solid #30363d; }
+        .accent-blue { color: #58a6ff; }
+        .status-done { background-color: rgba(46, 160, 67, 0.15); color: #3fb950; border: 1px solid rgba(63, 185, 80, 0.3); }
+        .status-progress { background-color: rgba(189, 147, 249, 0.15); color: #bd93f9; border: 1px solid rgba(189, 147, 249, 0.3); }
+        .status-pending { background-color: rgba(210, 153, 34, 0.15); color: #d29922; border: 1px solid rgba(210, 153, 34, 0.3); }
+        .status-delayed { background-color: rgba(220, 38, 38, 0.15); color: #f87171; border: 1px solid rgba(220, 38, 38, 0.3); }
+        .progress-bar { background-color: #30363d; height: 8px; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; transition: width 0.3s ease; border-radius: 4px; }
+        .map-placeholder {
+            background: linear-gradient(45deg, #1c2128 25%, #21262d 25%, #21262d 50%, #1c2128 50%, #1c2128 75%, #21262d 75%, #21262d 100%);
+            background-size: 40px 40px;
+        }
+        .sparkline { stroke-width: 2; stroke: #58a6ff; fill: none; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- SIDEBAR - IDENTIK DENGAN DASHBOARD -->
+    <aside class="w-64 sidebar p-6 flex flex-col border-r border-gray-800">
+        <div class="flex items-center gap-3 mb-10">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-500 p-2 rounded-xl shadow-lg">
+                <i class="fas fa-road text-white text-xl"></i>
+            </div>
+            <h1 class="font-bold text-lg leading-tight">RoadFix<br><span class="text-gray-400 text-sm">Gle Ghapui 2025</span></h1>
+        </div>
+        
+           <nav class="space-y-2 flex-grow">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-th-large"></i> Dashboard
+    </a>
+    <a href="titik-proyek.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-map-marked-alt"></i> Titik Proyek
+    </a>
+    <a href="logistik-alat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-truck-pickup"></i> Logistik & Alat
+    </a>
+    <a href="laporan-pupr.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-file-contract"></i> Laporan PUPR
+    </a>
+    <a href="tim-lapangan.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-users"></i> Tim Lapangan
+    </a>
+    <a href="analistik.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-chart-line"></i> Analitik
+    </a>
+    <a href="settings.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-cog"></i> Pengaturan
+    </a>
+</nav>
+
+        <div class="mt-auto p-4 card rounded-2xl flex items-center gap-3 hover:shadow-lg transition-all duration-200">
+            <img src="https://i.pravatar.cc/150?u=teuku" class="w-12 h-12 rounded-full border-2 border-blue-500 shadow-md">
+            <div>
+                <p class="font-bold text-sm">Ir. Teuku Iskandar, ST</p>
+                <p class="text-gray-400 text-xs">Project Manager</p>
+            </div>
+            <i class="fas fa-chevron-down text-gray-400 ml-auto"></i>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 overflow-y-auto">
+        <!-- HEADER - KONSISTEN DENGAN DASHBOARD -->
+        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-10 gap-6">
+            <div>
+                <nav class="flex text-sm text-gray-500 mb-2 gap-2">
+                    <a href="dashboard.html" class="hover:text-blue-400">Dashboard</a>
+                    <span>/</span>
+                    <span class="text-gray-300">Titik Proyek</span>
+                </nav>
+                <h2 class="text-3xl lg:text-4xl font-black bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Peta Distribusi Kerja</h2>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    <span class="bg-blue-600/20 text-blue-300 px-3 py-1 rounded-full text-sm font-medium">12 Titik Aktif</span>
+                    <span class="bg-green-600/20 text-green-300 px-3 py-1 rounded-full text-sm font-medium">72.8% Progres</span>
+                    <span class="bg-purple-600/20 text-purple-300 px-3 py-1 rounded-full text-sm font-medium">Update: 15 Jan 2025</span>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="window.location.href='dashboard.html'" class="bg-gray-800/50 backdrop-blur-sm px-5 py-2.5 rounded-xl border border-gray-700 hover:bg-gray-700/50 transition-all duration-200 flex items-center gap-2">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+                </button>
+                <button class="bg-gradient-to-r from-green-600 to-green-500 px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:from-green-500 hover:to-green-400 transition-all duration-200 flex items-center gap-2">
+                    <i class="fas fa-satellite-dish"></i> Sinkron GPS
+                </button>
+            </div>
+        </header>
+
+        <!-- STATS CARDS - KONSISTEN -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+            <div class="card p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 group">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-gray-400 text-sm font-medium uppercase tracking-wide">Titik Aktif</p>
+                    <i class="fas fa-map-marker-alt text-2xl text-blue-500 group-hover:rotate-12 transition-transform"></i>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-4xl font-black">12</h3>
+                    <span class="text-lg text-green-400 font-bold">Lokasi</span>
+                </div>
+                <div class="progress-bar mt-4">
+                    <div class="progress-fill bg-gradient-to-r from-green-400 to-green-500" style="width: 92%"></div>
+                </div>
+            </div>
+            
+            <div class="card p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 group">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-gray-400 text-sm font-medium uppercase tracking-wide">Akurasi GPS</p>
+                    <i class="fas fa-crosshairs text-2xl text-green-500 group-hover:rotate-12 transition-transform"></i>
+                </div>
+                <h3 class="text-4xl font-black text-green-400 mb-4">1.2m</h3>
+                <div class="flex items-center gap-2 text-sm text-green-400 font-medium">
+                    <i class="fas fa-arrow-up"></i> Real-time GNSS
+                </div>
+            </div>
+            
+            <div class="card p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 group">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-gray-400 text-sm font-medium uppercase tracking-wide">Update Terakhir</p>
+                    <i class="fas fa-clock text-2xl text-yellow-500 group-hover:rotate-12 transition-transform"></i>
+                </div>
+                <h3 class="text-4xl font-black text-yellow-400">15 Menit</h3>
+                <p class="text-sm text-gray-400 mt-2">lalu</p>
+            </div>
+            
+            <div class="card p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 group">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-gray-400 text-sm font-medium uppercase tracking-wide">Kendala</p>
+                    <i class="fas fa-exclamation-triangle text-2xl text-orange-500 group-hover:rotate-12 transition-transform"></i>
+                </div>
+                <h3 class="text-4xl font-black text-orange-400">3</h3>
+                <p class="text-sm text-gray-400 mt-2">Menunggu konfirmasi</p>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- INTERACTIVE MAP -->
+            <div class="lg:col-span-2 card rounded-3xl overflow-hidden relative min-h-[600px] shadow-2xl">
+                <div class="p-6 border-b border-gray-800/50 flex justify-between items-center">
+                    <div>
+                        <h4 class="font-black uppercase text-gray-300 text-lg tracking-widest mb-1">Peta Interaktif GNSS</h4>
+                        <p class="text-gray-500 text-sm">Real-time tracking 12 titik proyek</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="bg-gray-800/50 px-3 py-1.5 text-xs rounded-lg border border-gray-700 hover:bg-gray-700/50 transition-all">
+                            <i class="fas fa-layer-group"></i> Layers
+                        </button>
+                        <button class="bg-blue-600/20 text-blue-400 px-3 py-1.5 text-xs rounded-lg border border-blue-500/30 hover:bg-blue-600/30 transition-all">
+                            <i class="fas fa-search-plus"></i> Zoom
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="absolute inset-0 map-placeholder flex items-center justify-center">
+                    <div class="text-center">
+                        <i class="fas fa-map-marked-alt text-6xl text-gray-600 mb-6 animate-pulse"></i>
+                        <h3 class="text-2xl font-black text-gray-400 mb-2">Leaflet.js / Google Maps</h3>
+                        <p class="text-gray-500 font-medium mb-6">Interactive Map Module dengan GPS Tracker</p>
+                        <div class="flex flex-wrap gap-2 justify-center">
+                            <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">12 Titik Aktif</span>
+                            <span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs">3 Kendala</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAP MARKERS ANIMASI -->
+                <div class="absolute top-20 left-20 group">
+                    <div class="bg-green-500 w-5 h-5 rounded-full animate-ping absolute shadow-lg"></div>
+                    <div class="bg-green-500 w-5 h-5 rounded-full relative border-3 border-white shadow-xl"></div>
+                    <div class="absolute hidden group-hover:block bg-gray-900/95 p-3 rounded-2xl border border-gray-700 shadow-2xl -mt-14 -ml-12 w-48 text-xs backdrop-blur-sm">
+                        <div class="font-bold text-green-400 mb-1">#GG-001</div>
+                        <div>STA 0+000 (Selesai)</div>
+                        <div class="text-gray-400 mt-1 text-[10px]">5.3124° N, 95.9521° E</div>
+                    </div>
+                </div>
+
+                <div class="absolute top-1/2 left-1/2 group">
+                    <div class="bg-blue-500 w-4 h-4 rounded-full animate-pulse absolute shadow-lg"></div>
+                    <div class="bg-blue-500 w-4 h-4 rounded-full relative border-2 border-white shadow-lg"></div>
+                    <div class="absolute hidden group-hover:block bg-gray-900/95 p-3 rounded-2xl border border-gray-700 shadow-2xl -mt-14 -ml-12 w-48 text-xs backdrop-blur-sm">
+                        <div class="font-bold text-blue-400 mb-1">#GG-003</div>
+                        <div>STA 2+100 (Proses)</div>
+                        <div class="text-gray-400 mt-1 text-[10px]">5.3150° N, 95.9580° E</div>
+                    </div>
+                </div>
+
+                <div class="absolute bottom-24 right-24 group">
+                    <div class="bg-orange-500 w-4 h-4 rounded-full animate-bounce absolute shadow-lg"></div>
+                    <div class="bg-orange-500 w-4 h-4 rounded-full relative border-2 border-white shadow-lg"></div>
+                    <div class="absolute hidden group-hover:block bg-gray-900/95 p-3 rounded-2xl border border-gray-700 shadow-2xl -mt-14 -ml-12 w-48 text-xs backdrop-blur-sm">
+                        <div class="font-bold text-orange-400 mb-1">#GG-006</div>
+                        <div>STA 4+200 (Kendala)</div>
+                        <div class="text-gray-400 mt-1 text-[10px]">5.3200° N, 95.9650° E</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TITIK PROYEK LIST -->
+            <div class="space-y-4">
+                <h3 class="font-black text-xl mb-6 flex items-center gap-3 text-gray-200">
+                    <i class="fas fa-location-dot text-red-500"></i> Titik Prioritas
+                </h3>
+                
+                <!-- TITIK 1 -->
+                <div class="card p-6 rounded-3xl hover:shadow-xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer group">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full">GG-001</span>
+                        <span class="px-3 py-1 rounded-full status-done text-xs font-bold uppercase tracking-wide shadow-md">SELESAI</span>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2 group-hover:text-blue-400 transition-colors">Simpang Gle Ghapui</h4>
+                    <p class="text-gray-400 text-sm mb-3 font-mono">Lat: 5.3124° N | Long: 95.9521° E</p>
+                    <div class="progress-bar mb-3">
+                        <div class="progress-fill bg-gradient-to-r from-green-400 to-green-500" style="width: 100%"></div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="flex-1 bg-gray-800 hover:bg-gray-700 text-xs py-2 rounded-xl transition-all font-medium">Detail</button>
+                        <button class="bg-blue-600 hover:bg-blue-500 p-2 rounded-xl text-xs"><i class="fas fa-directions"></i></button>
+                    </div>
+                </div>
+
+                <!-- TITIK 2 -->
+                <div class="card p-6 rounded-3xl hover:shadow-xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer group opacity-90">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full">GG-003</span>
+                        <span class="px-3 py-1 rounded-full status-progress text-xs font-bold uppercase tracking-wide                        shadow-md">KENDALA</span>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2 group-hover:text-orange-400 transition-colors">Jembatan Kecil STA 2+100</h4>
+                    <p class="text-gray-400 text-sm mb-3 font-mono">Lat: 5.3150° N | Long: 95.9580° E</p>
+                    <div class="progress-bar mb-3">
+                        <div class="progress-fill bg-gradient-to-r from-yellow-400 to-yellow-500" style="width: 65%"></div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="flex-1 bg-orange-600/80 hover:bg-orange-500 text-xs py-2 rounded-xl transition-all font-medium text-white">Cek Kendala</button>
+                    </div>
+                </div>
+
+                <!-- TITIK 3 -->
+                <div class="card p-6 rounded-3xl hover:shadow-xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer group">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full">GG-005</span>
+                        <span class="px-3 py-1 rounded-full status-progress text-xs font-bold uppercase tracking-wide shadow-md">PROSES</span>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2 group-hover:text-blue-400 transition-colors">STA 3+500 Hotmix</h4>
+                    <p class="text-gray-400 text-sm mb-3 font-mono">Lat: 5.3180° N | Long: 95.9620° E</p>
+                    <div class="progress-bar mb-3">
+                        <div class="progress-fill bg-gradient-to-r from-blue-400 to-blue-500" style="width: 78%"></div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="flex-1 bg-gray-800 hover:bg-gray-700 text-xs py-2 rounded-xl transition-all font-medium">Live Track</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUICK ACTIONS - KONSISTEN DENGAN DASHBOARD -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+            <div class="card p-8 rounded-3xl hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-blue-600/20 p-3 rounded-2xl">
+                        <i class="fas fa-satellite text-2xl text-blue-400"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-lg">Tambah Titik Baru</h5>
+                        <p class="text-gray-400 text-sm">Input koordinat GNSS baru</p>
+                    </div>
+                </div>
+                <button class="w-full bg-gradient-to-r from-blue-600 to-blue-500 py-3 rounded-xl font-semibold hover:from-blue-500 hover:to-blue-400 transition-all shadow-lg">
+                    <i class="fas fa-plus mr-2"></i>Tambah Titik
+                </button>
+            </div>
+            
+            <div class="card p-8 rounded-3xl hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-green-600/20 p-3 rounded-2xl">
+                        <i class="fas fa-broadcast-tower text-2xl text-green-400"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-lg">Sinkronisasi</h5>
+                        <p class="text-gray-400 text-sm">Update data GPS lapangan</p>
+                    </div>
+                </div>
+                <button class="w-full bg-gradient-to-r from-green-600 to-green-500 py-3 rounded-xl font-semibold hover:from-green-500 hover:to-green-400 transition-all shadow-lg">
+                    <i class="fas fa-sync-alt mr-2 animate-spin-slow"></i>Sinkron Sekarang
+                </button>
+            </div>
+            
+            <div class="card p-8 rounded-3xl hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-purple-600/20 p-3 rounded-2xl">
+                        <i class="fas fa-layer-group text-2xl text-purple-400"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-lg">Export KML</h5>
+                        <p class="text-gray-400 text-sm">Untuk Google Earth / GIS</p>
+                    </div>
+                </div>
+                <button class="w-full bg-gradient-to-r from-purple-600 to-purple-500 py-3 rounded-xl font-semibold hover:from-purple-500 hover:to-purple-400 transition-all shadow-lg">
+                    <i class="fas fa-download mr-2"></i>Export Data
+                </button>
+            </div>
+        </div>
+
+        <!-- INFO GEOSPASIAL -->
+        <div class="card p-8 rounded-3xl mt-10 border border-blue-500/20 bg-blue-500/5">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="bg-blue-500/20 p-4 rounded-2xl">
+                    <i class="fas fa-globe text-2xl text-blue-400"></i>
+                </div>
+                <div>
+                    <h4 class="text-xl font-black text-blue-400 mb-2">Sistem GNSS RoadFix</h4>
+                    <p class="text-blue-300 font-medium">Akurasi Sub-Meter Real-time</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-satellite-dish text-green-400"></i>
+                        <span class="font-bold">RTK Network</span>
+                    </div>
+                    <p class="text-gray-400">BIG CORS Aceh + Base Station</p>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-database text-blue-400"></i>
+                        <span class="font-bold">Data Source</span>
+                    </div>
+                    <p class="text-gray-400">Garmin 70x + Trimble R12</p>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-shield-alt text-green-400"></i>
+                        <span class="font-bold">Akurasi</span>
+                    </div>
+                    <p class="text-gray-400">Horizontal: 8mm + 1ppm | Vertikal: 15mm + 1ppm</p>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-clock text-yellow-400"></i>
+                        <span class="font-bold">Refresh Rate</span>
+                    </div>
+                    <p class="text-gray-400">1 detik (Real-time)</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Animasi masuk yang konsisten
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+        });
+
+        // Interactive hover effects - KONSISTEN
+        document.querySelectorAll('button, .group').forEach(el => {
+            el.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            el.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Progress bar animations - KONSISTEN
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.progress-fill');
+                    progressBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 300);
+                    });
+                }
+            });
+        });
+
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Map marker hover effects
+        document.querySelectorAll('.group').forEach(group => {
+            group.addEventListener('mouseenter', function() {
+                const pulse = this.querySelector('.animate-ping, .animate-pulse, .animate-bounce');
+                if (pulse) pulse.style.animationDuration = '0.5s';
+            });
+            group.addEventListener('mouseleave', function() {
+                const pulse = this.querySelector('.animate-ping, .animate-pulse, .animate-bounce');
+                if (pulse) pulse.style.animationDuration = '2s';
+            });
+        });
+
+        // Custom CSS animation untuk sync button
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin-slow {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            .animate-spin-slow {
+                animation: spin-slow 3s linear infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

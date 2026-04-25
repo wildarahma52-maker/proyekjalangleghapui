@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoadFix Pidie - Gle Ghapui Sector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0f111a; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .sidebar { background-color: #161b22; }
+        .card { background-color: #1c2128; border: 1px solid #30363d; }
+        .accent-blue { color: #58a6ff; }
+        .status-done { background-color: rgba(46, 160, 67, 0.15); color: #3fb950; border: 1px solid rgba(63, 185, 80, 0.3); }
+        .status-progress { background-color: rgba(189, 147, 249, 0.15); color: #bd93f9; border: 1px solid rgba(189, 147, 249, 0.3); }
+        .status-pending { background-color: rgba(210, 153, 34, 0.15); color: #d29922; border: 1px solid rgba(210, 153, 34, 0.3); }
+        .status-delayed { background-color: rgba(220, 38, 38, 0.15); color: #f87171; border: 1px solid rgba(220, 38, 38, 0.3); }
+        .progress-bar { background-color: #30363d; height: 8px; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; transition: width 0.3s ease; border-radius: 4px; }
+        .sparkline { stroke-width: 2; stroke: #58a6ff; fill: none; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <aside class="w-64 sidebar p-6 flex flex-col border-r border-gray-800">
+        <div class="flex items-center gap-3 mb-10">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-500 p-2 rounded-xl shadow-lg">
+                <i class="fas fa-road text-white text-xl"></i>
+            </div>
+            <h1 class="font-bold text-lg leading-tight">RoadFix<br><span class="text-gray-400 text-sm">Gle Ghapui 2025</span></h1>
+        </div>
+        
+      <nav class="space-y-2 flex-grow">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-th-large"></i> Dashboard
+    </a>
+    <a href="titik-proyek.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-map-marked-alt"></i> Titik Proyek
+    </a>
+    <a href="logistik-alat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-truck-pickup"></i> Logistik & Alat
+    </a>
+    <a href="laporan-pupr.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-file-contract"></i> Laporan PUPR
+    </a>
+    <a href="tim-lapangan.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-users"></i> Tim Lapangan
+    </a>
+    <a href="analistik.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-chart-line"></i> Analitik
+    </a>
+    <a href="settings.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-cog"></i> Pengaturan
+    </a>
+</nav>
+
+        <div class="mt-auto p-4 card rounded-2xl flex items-center gap-3 hover:shadow-lg transition-all duration-200">
+            <img src="https://i.pravatar.cc/150?u=teuku" class="w-12 h-12 rounded-full border-2 border-blue-500 shadow-md">
+            <div>
+                <p class="font-bold text-sm">Ir. Teuku Iskandar, ST</p>
+                <p class="text-gray-400 text-xs">Project Manager</p>
+            </div>
+            <i class="fas fa-chevron-down text-gray-400 ml-auto"></i>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 overflow-y-auto">
+        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-10 gap-6">
+            <div>
+                <h2 class="text-3xl lg:text-4xl font-black bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Monitor Pemulihan Jalan</h2>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    <span class="bg-blue-600/20 text-blue-300 px-3 py-1 rounded-full text-sm font-medium">Kec. Indrajaya - Mila</span>
+                    <span class="bg-green-600/20 text-green-300 px-3 py-1 rounded-full text-sm font-medium">Kab. Pidie</span>
+                    <span class="bg-purple-600/20 text-purple-300 px-3 py-1 rounded-full text-sm font-medium">Update: 15 Jan 2025</span>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <button class="bg-gray-800/50 backdrop-blur-sm px-5 py-2.5 rounded-xl border border-gray-700 hover:bg-gray-700/50 transition-all duration-200 flex items-center gap-2">
+                    <i class="fas fa-download"></i> Ekspor Data
+                </button>
+                <button class="bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:from-blue-500 hover:to-blue-400 transition-all duration-200 flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Tambah Laporan
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+            <div class="card p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 group">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-gray-400 text-sm font-medium uppercase tracking-wide">Total Panjang Ruas</p>
+                    <i class="fas fa-road text-2xl text-blue-500 group-hover:rotate-12 transition-transform"></i>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-4xl font-black">4.850</h3>
+                    <span class="text-lg text-green-400 font-bold">Meter</span>
+                </div>
+                <div class="progress-bar mt-4">
+                    <div class="progress-fill bg-gradient-to-r from-green-400 to-green-500" style="width: 97%"></div>
+                </div>
+            </div>
+            
+            <div class="card p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 group">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-gray-400 text-sm font-medium uppercase tracking-wide">Progres Fisik</p>
+                    <i class="fas fa-chart-line text-2xl text-green-500 group-hover:rotate-12 transition-transform"></i>
+                </div>
+                <h3 class="text-4xl font-black text-green-400 mb-4">72.8%</h3>
+                <div class="flex items-center gap-2 text-sm text-green-400 font-medium">
+                    <i class="fas fa-arrow-up"></i> +4.2% minggu ini
+                </div>
+            </div>
+            
+            <div class="card p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 group">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-gray-400 text-sm font-medium uppercase tracking-wide">Anggaran Terpakai</p>
+                    <i class="fas fa-wallet text-2xl text-yellow-500 group-hover:rotate-12 transition-transform"></i>
+                </div>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-4xl font-black">Rp 14.2M</h3>
+                    <span class="text-lg text-gray-400">/ Rp 18.5M</span>
+                </div>
+                <div class="progress-bar mt-4">
+                    <div class="progress-fill bg-gradient-to-r from-yellow-400 to-yellow-500" style="width: 77%"></div>
+                </div>
+            </div>
+            
+            <div class="card p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 group">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-gray-400 text-sm font-medium uppercase tracking-wide">Hari Kerja Tersisa</p>
+                    <i class="fas fa-calendar-times text-2xl text-orange-500 group-hover:rotate-12 transition-transform"></i>
+                </div>
+                <h3 class="text-4xl font-black text-orange-400">38 Hari</h3>
+                <p class="text-sm text-gray-400 mt-2">Target selesai: 28 Feb 2025</p>
+            </div>
+        </div>
+
+        <!-- Projects Table -->
+        <section class="card rounded-3xl overflow-hidden shadow-2xl">
+            <div class="p-8 border-b border-gray-800/50 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                <div>
+                    <h4 class="font-black uppercase text-gray-300 text-lg tracking-widest mb-1">Detail Pekerjaan Lapangan</h4>
+                    <p class="text-gray-500 text-sm">Periode Januari - Maret 2025 | 12 Segmen Aktif</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <select class="bg-gray-800/50 backdrop-blur-sm text-sm rounded-xl p-2 border border-gray-700/50 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all">
+                        <option>Semua Status</option>
+                        <option>Selesai</option>
+                        <option>Proses</option>
+                        <option>Tertunda</option>
+                    </select>
+                    <select class="bg-gray-800/50 backdrop-blur-sm text-sm rounded-xl p-2 border border-gray-700/50 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all">
+                        <option>Urutkan Terbaru</option>
+                        <option>Panjang Segmen</option>
+                        <option>Progres</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-gradient-to-r from-gray-900/50 to-gray-800/50 backdrop-blur-sm text-gray-300 text-sm sticky top-0 z-10">
+                        <tr>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs">ID Segmen</th>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs">Lokasi (STA)</th>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs">Jenis Pekerjaan</th>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs">Panjang</th>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs">Progres</th>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs">Target</th>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs">Status</th>
+                            <th class="p-6 font-bold uppercase tracking-wider text-xs text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-gray-800/50">
+                        <tr class="hover:bg-gray-800/30 transition-colors duration-200">
+                            <td class="p-6 font-mono font-bold text-blue-400">GG-001</td>
+                            <td class="p-6">STA 0+000 - 1+200</td>
+                            <td class="p-6 font-medium">Overlay Aspal AC-WC 14cm</td>
+                            <td class="p-6"><span class="font-bold text-green-400">1.200m</span></td>
+                            <td class="p-6">
+                                <div class="w-24">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill bg-green-500" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-6 text-gray-400">12 Jan 2025</td>
+                            <td class="p-6">
+                                <span class="px-4 py-2 rounded-full status-done text-xs font-bold uppercase tracking-wide shadow-md">Selesai</span>
+                            </td>
+                            <td class="p-6 text-center">
+                                <button class="text-blue-400 hover:text-blue-300 p-2 rounded-lg hover:bg-blue-500/10 transition-all">
+                                    <i class="fas fa-images"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-800/30 transition-colors duration-200">
+                            <td class="p-6 font-mono font-bold text-blue-400">GG-002</td>
+                            <td class="p-6">STA 1+200 - 1+800</td>
+                            <td class="p-6 font-medium">Drainase Box Culvert + Talud</td>
+                            <td class="p-6"><span class="font-bold text-blue-400">600m</span></td>
+                            <td class="p-6">
+                                <div class="w-24">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill bg-purple-500" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-6 text-gray-400">25 Jan 2025</td>
+                            <td class="p-6">
+                                <span class="px-4 py-2 rounded-full status-progress text-xs font-bold uppercase tracking-wide shadow-md">Proses</span>
+                            </td>
+                            <td class="p-6 text-center">
+                                <button class="text-green-400 hover:text-green-300 p-2 rounded-lg hover:bg-green-500/10 transition-all">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-800/30 transition-colors duration-200">
+                            <td class="p-6 font-mono font-bold text-blue-400">GG-003</td>
+                            <td class="p-6">STA 2+100 (Jembatan Kecil)</td>
+                            <td class="p-6 font-medium">Pemasangan Guardrail + Railing</td>
+                            <td class="p-6"><span class="font-bold text-yellow-400">150m</span></td>
+                            <td class="p-6">
+                                <div class="w-24">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill bg-yellow-500" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-6 text-gray-400">18 Jan 2025</td>
+                            <td class="p-6">
+                                <span class="px-4 py-2 rounded-full status-pending text-xs font-bold uppercase tracking-wide shadow-md">Tertunda</span>
+                            </td>
+                            <td class="p-6 text-center">
+                                <button class="text-orange-400 hover:text-orange-300 p-2 rounded-lg hover:bg-orange-500/10 transition-all">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-800/30 transition-colors duration-200">
+                            <td class="p-6 font-mono font-bold text-blue-400">GG-004</td>
+                            <td class="p-6">STA 2+800 - 3+500</td>
+                            <td class="p-6 font-medium">Coldmix + Patchwork</td>
+                            <td class="p-6"><span class="font-bold text-green-400">700m</span></td>
+                            <td class="p-6">
+                                <div class="w-24">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill bg-green-500" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-6 text-gray-400">10 Jan 2025</td>
+                            <td class="p-6">
+                                <span class="px-4 py-2 rounded-full status-done text-xs font-bold uppercase tracking-wide shadow-md">Selesai</span>
+                            </td>
+                            <td class="p-6 text-center">
+                                <button class="text-blue-400 hover                                <text-blue-300 p-2 rounded-lg hover:bg-blue-500/10 transition-all">
+                                    <i class="fas fa-images"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-800/30 transition-colors duration-200">
+                            <td class="p-6 font-mono font-bold text-blue-400">GG-005</td>
+                            <td class="p-6">STA 3+500 - 4+200</td>
+                            <td class="p-6 font-medium">Aspal Hotmix AC-Base 10cm</td>
+                            <td class="p-6"><span class="font-bold text-blue-400">700m</span></td>
+                            <td class="p-6">
+                                <div class="w-24">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill bg-purple-500" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-6 text-gray-400">22 Jan 2025</td>
+                            <td class="p-6">
+                                <span class="px-4 py-2 rounded-full status-progress text-xs font-bold uppercase tracking-wide shadow-md">Proses</span>
+                            </td>
+                            <td class="p-6 text-center">
+                                <button class="text-green-400 hover:text-green-300 p-2 rounded-lg hover:bg-green-500/10 transition-all">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-800/30 transition-colors duration-200">
+                            <td class="p-6 font-mono font-bold text-blue-400">GG-006</td>
+                            <td class="p-6">STA 4+200 - 4+850</td>
+                            <td class="p-6 font-medium">Pembuatan Shoulder + Trotoar</td>
+                            <td class="p-6"><span class="font-bold text-yellow-400">650m</span></td>
+                            <td class="p-6">
+                                <div class="w-24">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill bg-yellow-500" style="width: 42%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-6 text-gray-400">05 Feb 2025</td>
+                            <td class="p-6">
+                                <span class="px-4 py-2 rounded-full status-pending text-xs font-bold uppercase tracking-wide shadow-md">Tertunda</span>
+                            </td>
+                            <td class="p-6 text-center">
+                                <button class="text-orange-400 hover:text-orange-300 p-2 rounded-lg hover:bg-orange-500/10 transition-all">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-800/30 transition-colors duration-200">
+                            <td class="p-6 font-mono font-bold text-blue-400">GG-007</td>
+                            <td class="p-6">STA 0+500 - 0+800 (Titik Kritis)</td>
+                            <td class="p-6 font-medium">Geoteknik Stabilisasi Tanah</td>
+                            <td class="p-6"><span class="font-bold text-green-400">300m</span></td>
+                            <td class="p-6">
+                                <div class="w-24">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill bg-green-500" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-6 text-gray-400">08 Jan 2025</td>
+                            <td class="p-6">
+                                <span class="px-4 py-2 rounded-full status-done text-xs font-bold uppercase tracking-wide shadow-md">Selesai</span>
+                            </td>
+                            <td class="p-6 text-center">
+                                <button class="text-blue-400 hover:text-blue-300 p-2 rounded-lg hover:bg-blue-500/10 transition-all">
+                                    <i class="fas fa-images"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-800/30 transition-colors duration-200">
+                            <td class="p-6 font-mono font-bold text-blue-400">GG-008</td>
+                            <td class="p-6">STA 4+850 - 4+950 (Persimpangan)</td>
+                            <td class="p-6 font-medium">Marka Jalan + Rambu Lalu Lintas</td>
+                            <td class="p-6"><span class="font-bold text-orange-400">100m</span></td>
+                            <td class="p-6">
+                                <div class="w-24">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill bg-red-500" style="width: 25%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-6 text-gray-400">15 Feb 2025</td>
+                            <td class="p-6">
+                                <span class="px-4 py-2 rounded-full status-delayed text-xs font-bold uppercase tracking-wide shadow-md">Tertunda</span>
+                            </td>
+                            <td class="p-6 text-center">
+                                <button class="text-red-400 hover:text-red-300 p-2 rounded-lg hover:bg-red-500/10 transition-all">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="p-8 border-t border-gray-800/50 bg-gray-900/30">
+                <div class="flex items-center justify-between text-sm text-gray-400">
+                    <span>Menampilkan 8 dari 12 segmen</span>
+                    <div class="flex gap-2">
+                        <button class="p-2 rounded-lg hover:bg-gray-700/50 transition-colors">‹</button>
+                        <button class="p-2 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors">1</button>
+                        <button class="p-2 rounded-lg hover:bg-gray-700/50 transition-colors">2</button>
+                        <button class="p-2 rounded-lg hover:bg-gray-700/50 transition-colors">›</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+            <div class="card p-8 rounded-3xl hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-blue-600/20 p-3 rounded-2xl">
+                        <i class="fas fa-camera text-2xl text-blue-400"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-lg">Upload Progres</h5>
+                        <p class="text-gray-400 text-sm">Unggah foto terkini lapangan</p>
+                    </div>
+                </div>
+                <button class="w-full bg-gradient-to-r from-blue-600 to-blue-500 py-3 rounded-xl font-semibold hover:from-blue-500 hover:to-blue-400 transition-all shadow-lg">Upload Sekarang</button>
+            </div>
+            
+            <div class="card p-8 rounded-3xl hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-green-600/20 p-3 rounded-2xl">
+                        <i class="fas fa-file-upload text-2xl text-green-400"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-lg">Laporan Harian</h5>
+                        <p class="text-gray-400 text-sm">Isi laporan pekerjaan hari ini</p>
+                    </div>
+                </div>
+                <button class="w-full bg-gradient-to-r from-green-600 to-green-500 py-3 rounded-xl font-semibold hover:from-green-500 hover:to-green-400 transition-all shadow-lg">Buat Laporan</button>
+            </div>
+            
+            <div class="card p-8 rounded-3xl hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-orange-600/20 p-3 rounded-2xl">
+                        <i class="fas fa-bullhorn text-2xl text-orange-400"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-lg">Notifikasi</h5>
+                        <p class="text-gray-400 text-sm">3 kendala menunggu konfirmasi</p>
+                    </div>
+                </div>
+                <button class="w-full bg-gradient-to-r from-orange-600 to-orange-500 py-3 rounded-xl font-semibold hover:from-orange-500 hover:to-orange-400 transition-all shadow-lg">Lihat Kendala</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Simple interactive elements
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-1px)';
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Progress bar animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.progress-fill');
+                    progressBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 200);
+                    });
+                }
+            });
+        });
+
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Highlight menu aktif
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('from') === 'titik-proyek') {
+        document.querySelector('a[href="titik-proyek.html?from=dashboard"]').classList.add('accent-blue', 'bg-gray-800/50');
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan PUPR - RoadFix Pidie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { 
+            background-color: #0f111a; 
+            color: #e2e8f0; 
+            font-family: 'Inter', sans-serif; 
+        }
+        .sidebar { background-color: #161b22; }
+        .card { 
+            background-color: #1c2128; 
+            border: 1px solid #30363d; 
+            transition: all 0.3s ease;
+        }
+        .card:hover { 
+            border-color: #58a6ff; 
+            box-shadow: 0 20px 25px -5px rgba(88, 166, 255, 0.1);
+        }
+        .accent-blue { color: #58a6ff; }
+        .status-verified { 
+            background-color: rgba(46, 160, 67, 0.15); 
+            color: #3fb950; 
+            border: 1px solid rgba(63, 185, 80, 0.3); 
+        }
+        .status-review { 
+            background-color: rgba(210, 153, 34, 0.15); 
+            color: #d29922; 
+            border: 1px solid rgba(210, 153, 34, 0.3); 
+        }
+        .status-draft { 
+            background-color: rgba(189, 147, 249, 0.15); 
+            color: #bd93f9; 
+            border: 1px solid rgba(189, 147, 249, 0.3); 
+        }
+        .status-final { 
+            background-color: rgba(16, 185, 129, 0.15); 
+            color: #10b981; 
+            border: 1px solid rgba(16, 185, 129, 0.3); 
+        }
+        .table-header { 
+            background: linear-gradient(to right, #161b22, #1c2128); 
+        }
+        .progress-bar { 
+            background-color: #30363d; 
+            height: 6px; 
+            border-radius: 3px; 
+            overflow: hidden; 
+        }
+        .progress-fill { 
+            height: 100%; 
+            transition: width 0.5s ease; 
+            border-radius: 3px; 
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-in { animation: slideIn 0.6s ease forwards; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar - Identik dengan Dashboard -->
+    <aside class="w-64 sidebar p-6 flex flex-col border-r border-gray-800">
+        <div class="flex items-center gap-3 mb-10">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-500 p-2 rounded-xl shadow-lg">
+                <i class="fas fa-road text-white text-xl"></i>
+            </div>
+            <h1 class="font-bold text-lg leading-tight">RoadFix<br><span class="text-gray-400 text-sm">Gle Ghapui 2025</span></h1>
+        </div>
+        
+      <nav class="space-y-2 flex-grow">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-th-large"></i> Dashboard
+    </a>
+    <a href="titik-proyek.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-map-marked-alt"></i> Titik Proyek
+    </a>
+    <a href="logistik-alat.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-truck-pickup"></i> Logistik & Alat
+    </a>
+    <a href="laporan-pupr.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-file-contract"></i> Laporan PUPR
+    </a>
+    <a href="tim-lapangan.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-users"></i> Tim Lapangan
+    </a>
+    <a href="analistik.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-chart-line"></i> Analitik
+    </a>
+    <a href="settings.html" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-all">
+        <i class="fas fa-cog"></i> Pengaturan
+    </a>
+</nav>
+
+        <div class="mt-auto p-4 card rounded-2xl flex items-center gap-3 hover:shadow-lg transition-all duration-200 cursor-pointer group">
+            <img src="https://i.pravatar.cc/150?u=teuku" class="w-12 h-12 rounded-full border-2 border-blue-500 shadow-md group-hover:scale-105 transition-transform">
+            <div>
+                <p class="font-bold text-sm">Ir. Teuku Iskandar, ST</p>
+                <p class="text-gray-400 text-xs">Project Manager</p>
+            </div>
+            <i class="fas fa-chevron-down text-gray-400 ml-auto group-hover:rotate-180 transition-transform"></i>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 overflow-y-auto">
+        <!-- Header -->
+        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-6 slide-in">
+            <div>
+                <div class="flex items-center gap-2 text-blue-400 mb-3">
+                    <i class="fas fa-file-signature text-xl"></i>
+                    <span class="text-sm font-bold uppercase tracking-widest">Dokumentasi Administrasi PUPR</span>
+                </div>
+                <h2 class="text-3xl lg:text-4xl font-black bg-gradient-to-r from-blue-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    Laporan Standar PUPR
+                </h2>
+                <div class="flex flex-wrap gap-2 mt-3">
+                    <span class="bg-blue-600/20 text-blue-300 px-3 py-1 rounded-full text-sm font-medium">Sektor Gle Ghapui</span>
+                    <span class="bg-green-600/20 text-green-300 px-3 py-1 rounded-full text-sm font-medium">Paket Rehabilitasi Jalan Pidie 2025</span>
+                    <span class="bg-purple-600/20 text-purple-300 px-3 py-1 rounded-full text-sm font-medium">No. Kontrak: 602/PUPR-BM/2024/045</span>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <button class="bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-xl border border-gray-700 hover:bg-gray-700/50 transition-all duration-200 flex items-center gap-2 shadow-lg">
+                    <i class="fas fa-print"></i> Cetak Semua
+                </button>
+                <button class="bg-gradient-to-r from-blue-600 to-blue-500 px-7 py-3 rounded-xl font-semibold shadow-lg hover:from-blue-500 hover:to-blue-400 transition-all duration-200 flex items-center gap-2">
+                    <i class="fas fa-file-medical"></i> Generate Laporan Baru
+                </button>
+            </div>
+        </header>
+
+        <!-- Filter & Stats -->
+        <div class="card p-6 rounded-3xl mb-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 slide-in">
+            <div class="flex flex-wrap gap-4 items-center">
+                <div class="relative">
+                    <i class="fas fa-search absolute left-4 top-4 text-gray-500"></i>
+                    <input type="text" placeholder="Cari nomor kontrak/laporan/segmen..." 
+                           class="bg-gray-900 border border-gray-700 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 w-80 transition-all">
+                </div>
+                <select class="bg-gray-900 border border-gray-700 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
+                    <option>Minggu Ini</option>
+                    <option>Bulan Januari 2025</option>
+                    <option>Triwulan I 2025</option>
+                    <option>Semua Periode</option>
+                </select>
+                <select class="bg-gray-900 border border-gray-700 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
+                    <option>Status Terverifikasi</option>
+                    <option>Draft</option>
+                    <option>Menunggu Review</option>
+                    <option>Final</option>
+                </select>
+            </div>
+            <div class="text-sm text-gray-400 flex flex-wrap gap-6 items-center">
+                <div>Total Arsip: <span class="text-white font-bold text-lg">24 Laporan</span></div>
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                    <span>Terverifikasi: 18</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <span>Draft: 6</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Laporan List -->
+            <div class="lg:col-span-2 space-y-6">
+                <h3 class="font-black text-xl text-gray-200 mb-6 flex items-center gap-3 slide-in">
+                    <i class="fas fa-history text-blue-500"></i> 
+                    Riwayat Laporan Terakhir
+                </h3>
+                
+                <!-- Laporan Card 1 -->
+                <div class="card p-7 rounded-3xl hover:border-blue-500/50 slide-in" style="animation-delay: 0.1s;">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pb-6 border-b border-gray-800">
+                        <div class="flex gap-5 flex-1">
+                            <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 p-4 rounded-2xl text-blue-400 border border-blue-500/30 group-hover:scale-105 transition-all">
+                                <i class="fas fa-file-alt text-2xl"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-bold text-xl mb-1 truncate">Laporan Mingguan - Ke 03</h4>
+                                <p class="text-sm text-gray-500 mb-3">ID: <span class="font-mono font-bold text-blue-400">PUPR-GGP-2025-003</span></p>
+                                <p class="text-xs text-gray-500 mb-3">Periode: 08 Jan - 14 Jan 2025 | Progres Fisik: 72.8%</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-4 py-2 rounded-full status-verified text-xs font-bold uppercase tracking-wide shadow-md">Terverifikasi PPK</span>
+                                    <span class="px-3 py-1.5 bg-gray-800/50 text-xs rounded-full">Termin 2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3 lg:gap-2">
+                            <button class="bg-blue-600/20 text-blue-400 text-sm px-4 py-2 rounded-xl hover:bg-blue-600 hover:text-white transition-all font-medium border border-blue-500/30">
+                                <i class="fas fa-eye mr-1"></i> Lihat
+                            </button>
+                            <button class="bg-green-600/20 text-green-400 text-sm px-4 py-2 rounded-xl hover:bg-green-600 hover:text-white transition-all font-medium border border-green-500/30">
+                                <i class="fas fa-download mr-1"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 mt-4">
+                        <div class="flex items-center gap-4 text-xs text-gray-500">
+                            <span>Dibuat: 15 Jan 2025 09:30</span>
+                            <span>·</span>
+                            <span>Diperbarui: 16 Jan 2025 14:22</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-user text-blue-400"></i>
+                            <span>Ir. Teuku Iskandar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Laporan Card 2 -->
+                <div class="card p-7 rounded-3xl hover:border-yellow-500/50 slide-in" style="animation-delay: 0.2s;">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pb-6 border-b border-gray-800">
+                        <div class="flex gap-5 flex-1">
+                            <div class="bg-gradient-to-br from-yellow-500/20 to-yellow-600/20 p-4 rounded-2xl text-yellow-400 border border-yellow-500/30 group-hover:scale-105 transition-all">
+                                <i class="fas fa-clock text-2xl"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-bold text-xl mb-1 truncate">Laporan Mingguan - Ke 04 (Draft)</h4>
+                                <p class="text-sm text-gray-500 mb-3">ID: <span class="font-mono font-bold text-blue-400">PUPR-GGP-2025-004</span></p>
+                                <p class="text-xs text-gray-500 mb-3">Periode: 15 Jan - 21 Jan 2025 | Progres Fisik: 78.2%</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-4 py-2 rounded-full status-review text-xs font-bold uppercase tracking-wide shadow-md">Menunggu Tanda Tangan Konsultan</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3 lg:gap-2">
+                            <button class="bg-purple-600/20 text-purple-400 text-sm px-4 py-2 rounded-xl hover:bg-purple-600 hover:text-white transition-all font-medium border border-purple-500/30">
+                                <i class="fas fa-edit mr-1"></i> Lanjutkan
+                            </button>
+                            <button class="bg-gray-600/20 text-gray-400 text-sm px-4 py-2 rounded-xl hover:bg-gray-600 hover:text-white transition-all font-medium border border-gray-500/30">
+                                <i class="fas fa-trash mr-1"></i> Hapus
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 mt-4">
+                        <div class="flex items-center gap-4 text-xs text-gray-500">
+                            <span>Dibuat: 17 Jan 2025 11:15</span>
+                            <span>·</span>
+                            <span>Diperbarui: 17 Jan 2025 16:45</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-user text-purple-400"></i>
+                            <span>CV. Aceh Engineering</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Laporan Card 3 -->
+                <div class="card p-7 rounded-3xl border-l-4 border-l-green-500 slide-in" style="animation-delay: 0.3s;">
+                    <div class="flex justify-between items-center">
+                        <div class="flex gap-5">
+                            <div class="bg-gradient-to-br from-green-500/20 to-green-600/20 p-4 rounded-2xl text-green-400">
+                                <i class="fas fa-box-open text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-1">Laporan Bulanan - Januari 2025</h4>
+                                <p class="text-sm text-gray-500 mb-2">Konsolidasi Progres Fisik 72.8% | Konsolidasi Keuangan 68.4%</p>
+                                <div class="flex items-center gap-4 text-xs text-gray-500">
+                                    <span>ID: <span class="font-mono font-bold text-green-400">PUPR-GGP-2025-M01</span></span>
+                                    <span>Ukuran: 4.2 MB                                </span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="bg-green-600 px-6 py-3 rounded-xl font-semibold shadow-lg hover:bg-green-500 transition-all flex items-center gap-2 border border-green-500/30">
+                            Download PDF <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Laporan Card 4 -->
+                <div class="card p-7 rounded-3xl hover:border-purple-500/50 slide-in" style="animation-delay: 0.4s;">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pb-6 border-b border-gray-800">
+                        <div class="flex gap-5 flex-1">
+                            <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 p-4 rounded-2xl text-purple-400 border border-purple-500/30 group-hover:scale-105 transition-all">
+                                <i class="fas fa-file-invoice-dollar text-2xl"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-bold text-xl mb-1 truncate">Laporan Termin Pembayaran 2</h4>
+                                <p class="text-sm text-gray-500 mb-3">ID: <span class="font-mono font-bold text-blue-400">PUPR-GGP-2025-TERM2</span></p>
+                                <p class="text-xs text-gray-500 mb-3">Nilai: Rp 7.850.000.000 | Progres: 72.8%</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-4 py-2 rounded-full status-final text-xs font-bold uppercase tracking-wide shadow-md">Final</span>
+                                    <span class="px-3 py-1.5 bg-gray-800/50 text-xs rounded-full">Disetujui</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-emerald-600/20 text-emerald-400 text-sm px-4 py-2 rounded-xl hover:bg-emerald-600 hover:text-white transition-all font-medium border border-emerald-500/30">
+                                <i class="fas fa-check-circle mr-1"></i> Verifikasi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Right - Ringkasan & Template -->
+            <div class="space-y-6">
+                <!-- Ringkasan Kontrak -->
+                <div class="card p-7 rounded-3xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-blue-500/20">
+                    <h3 class="font-bold text-lg mb-6 flex items-center gap-2">
+                        <i class="fas fa-file-contract text-blue-400"></i> 
+                        Ringkasan Kontrak
+                    </h3>
+                    <div class="space-y-4 text-sm divide-y divide-gray-700">
+                        <div class="flex justify-between py-3">
+                            <span class="text-gray-400 font-medium">No. Kontrak</span>
+                            <span class="font-mono text-xs font-bold text-blue-400">602/PUPR-BM/2024/045</span>
+                        </div>
+                        <div class="flex justify-between py-3">
+                            <span class="text-gray-400 font-medium">Penyedia Jasa</span>
+                            <span class="font-medium">PT. Samudera Pasai Konstruksi</span>
+                        </div>
+                        <div class="flex justify-between py-3">
+                            <span class="text-gray-400 font-medium">Konsultan MK</span>
+                            <span class="font-medium">CV. Aceh Engineering</span>
+                        </div>
+                        <div class="flex justify-between py-3">
+                            <span class="text-gray-400 font-medium">PPK</span>
+                            <span class="font-bold text-green-400">Ir. Teuku Iskandar, ST</span>
+                        </div>
+                        <div class="mt-4 p-4 bg-gradient-to-r from-blue-500/10 to-blue-600/10 rounded-2xl border border-blue-500/30">
+                            <p class="text-xs uppercase text-blue-400 font-bold mb-2 flex items-center gap-1">
+                                <i class="fas fa-exclamation-circle"></i> Catatan Auditor
+                            </p>
+                            <p class="text-xs text-gray-300 leading-relaxed">"Pastikan dokumentasi foto STA 2+100 (Jembatan) diperbarui sebelum pengajuan termin. Lampirkan hasil lab aspal."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat Progres Laporan -->
+                <div class="card p-7 rounded-3xl">
+                    <h3 class="font-bold text-lg mb-6 flex items-center gap-2 text-gray-200">
+                        <i class="fas fa-chart-pie text-green-400"></i>
+                        Statistik Laporan
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-400">Terverifikasi</span>
+                            <div class="flex items-center gap-2">
+                                <div class="progress-bar w-16">
+                                    <div class="progress-fill bg-green-500" style="width: 75%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-green-400">18/24</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-400">Draft</span>
+                            <div class="flex items-center gap-2">
+                                <div class="progress-bar w-16">
+                                    <div class="progress-fill bg-purple-500" style="width: 25%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-purple-400">6/24</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template Standar -->
+                <div class="card p-6 rounded-3xl">
+                    <h3 class="font-bold text-sm uppercase tracking-widest text-gray-400 mb-5 flex items-center gap-2">Template Standar</h3>
+                    <div class="grid grid-cols-1 gap-3">
+                        <a href="#" class="flex items-center justify-between p-4 bg-gray-900/50 rounded-xl hover:bg-gray-800 transition-all group border border-gray-700/50 hover:border-blue-500/50">
+                            <span class="text-sm font-medium">Form Request Pekerjaan</span>
+                            <i class="fas fa-file-word text-blue-400 text-lg group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="flex items-center justify-between p-4 bg-gray-900/50 rounded-xl hover:bg-gray-800 transition-all group border border-gray-700/50 hover:border-green-500/50">
+                            <span class="text-sm font-medium">Format Back-Up Data Fisik</span>
+                            <i class="fas fa-file-excel text-green-400 text-lg group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="flex items-center justify-between p-4 bg-gray-900/50 rounded-xl hover:bg-gray-800 transition-all group border border-gray-700/50 hover:border-orange-500/50">
+                            <span class="text-sm font-medium">Template Laporan Foto 0-50-100%</span>
+                            <i class="fas fa-file-powerpoint text-orange-400 text-lg group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="flex items-center justify-between p-4 bg-gray-900/50 rounded-xl hover:bg-gray-800 transition-all group border border-gray-700/50 hover:border-purple-500/50">
+                            <span class="text-sm font-medium">Checklist Verifikasi PPK</span>
+                            <i class="fas fa-clipboard-check text-purple-400 text-lg group-hover:scale-110 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="card p-6 rounded-3xl mt-12 slide-in" style="animation-delay: 0.5s;">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-400">
+                <span>Menampilkan 4 dari 24 laporan</span>
+                <div class="flex items-center gap-1">
+                    <button class="p-2 rounded-lg hover:bg-gray-700/50 transition-all w-10 h-10 flex items-center justify-center">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="p-2 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-all w-10 h-10 font-bold">1</button>
+                    <button class="p-2 rounded-lg hover:bg-gray-700/50 transition-all w-10 h-10">2</button>
+                    <button class="p-2 rounded-lg hover:bg-gray-700/50 transition-all w-10 h-10">3</button>
+                    <button class="p-2 rounded-lg hover:bg-gray-700/50 transition-all w-10 h-10 flex items-center justify-center">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Highlight menu aktif berdasarkan URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
+            const menuItems = document.querySelectorAll('nav a');
+            
+            menuItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href === currentPage || (currentPage.includes('pupr') && href.includes('file-contract'))) {
+                    item.classList.add('accent-blue', 'bg-gray-800/50', 'backdrop-blur-sm', 'p-3', 'rounded-xl', 'border', 'border-gray-700/50');
+                    item.querySelector('i').classList.add('text-lg');
+                }
+            });
+
+            // Navigasi ke dashboard
+            document.querySelector('a[href="dashboard.html"]').addEventListener('click', function(e) {
+                // Bisa tambahkan transisi smooth jika diperlukan
+            });
+
+            // Hover effects untuk cards
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-4px)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Progress bar animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressBars = entry.target.querySelectorAll('.progress-fill');
+                        progressBars.forEach(bar => {
+                            const width = bar.style.width;
+                            bar.style.width = '0%';
+                            setTimeout(() => {
+                                bar.style.width = width;
+                            }, 300);
+                        });
+                    }
+                });
+            });
+
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // Slide-in animation untuk elemen
+            const slideObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.slide-in').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                slideObserver.observe(el);
+            });
+        });
+
+        // Button hover effects
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
